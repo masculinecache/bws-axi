@@ -1,0 +1,12 @@
+{
+  "name": "@masculinecache/bws-axi",
+  "version": "1.0.0",
+  "description": "Agent-ergonomic Bitwarden Secrets Manager CLI — TOON output, values redacted by default",
+  "type": "module",
+  "bin": { "bws-axi": "bin/bws-axi" },
+  "files": ["bin/", "skill/", "README.md"],
+  "engines": { "node": ">=18" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/masculinecache/bws-axi.git" },
+  "keywords": ["bitwarden", "secrets-manager", "bws", "agents", "cli", "toon"]
+}

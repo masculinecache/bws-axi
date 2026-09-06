@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify packed contents (dry run)
+        run: npm publish --dry-run
+
+      - name: Clean-prefix install and smoke test
+        run: |
+          npm i -g . --prefix /tmp/bwstest
+          /tmp/bwstest/bin/bws-axi --help >/dev/null

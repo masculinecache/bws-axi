@@ -208,7 +208,7 @@ async function main() {
         'bws-axi: ambient-context setup for agents',
         '',
         'Primary integration: set BWS_ACCESS_TOKEN in your agent session environment',
-        '(or BWS_TOKEN_FILE pointing at ~/.config/bwsh/token, matching the bws-init pattern).',
+        '(or BWS_TOKEN_FILE pointing at ~/.config/bwsh/token, generic user-level default).',
         '',
         'Secondary: install this skill (~/.agents/skills/bws-axi/) so agents load it on demand.',
         '',

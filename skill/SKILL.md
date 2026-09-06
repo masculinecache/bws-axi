@@ -11,7 +11,7 @@ List projects and secrets, read values on demand. TOON output, values never show
 
 - `bws` CLI 2.x (`bws --version`) — or set `BWS_BIN`
 - Auth token: `BWS_ACCESS_TOKEN` env, or `BWS_TOKEN_FILE` pointing at a token file
-  (default `~/.config/bwsh/token`, matching the `~/docker/selfhost/bws-init` pattern)
+  (default `~/.config/bwsh/token`, or any file readable by the agent)
 
 Run `bws-axi doctor` to diagnose both.
 

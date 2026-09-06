@@ -1,6 +1,6 @@
 {
   "name": "@masculinecache/bws-axi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Agent-ergonomic Bitwarden Secrets Manager CLI — TOON output, values redacted by default",
   "type": "module",
   "bin": { "bws-axi": "bin/bws-axi" },

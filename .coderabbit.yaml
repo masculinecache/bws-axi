@@ -1,0 +1,14 @@
+reviews:
+  profile: "assertive"
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/dist/**"
+    - "!**/*.lock"
+    - "!**/package-lock.json"
+  path_instructions:
+    - path: "**/*"
+      instructions: |
+        Focus on security implications of secret management operations.
+        Check CLI output handling ensures values are redacted by default.
+        Verify error messages don't leak sensitive information.
+        Flag hardcoded credentials or insecure secret handling patterns.

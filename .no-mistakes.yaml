@@ -7,3 +7,5 @@ auto_fix:
   review: 0
   document: 1
   ci: 1
+
+disable_project_settings: true

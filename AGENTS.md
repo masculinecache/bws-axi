@@ -14,3 +14,11 @@ The five-layer repo-identity pattern (fleet reference) is documented in `/home/u
 ## Maintaining this file
 
 Keep entries to knowledge useful to almost every future session. Prefer pointers to authoritative files over copying details. Update this section only when durable, project-intrinsic facts change.
+
+## Git commit identity
+
+Committing agents set `GIT_AUTHOR_NAME`/`GIT_COMMITTER_NAME` to `<model>@<hostname -s>` at commit time.
+
+## Secrets
+
+Secrets live in Bitwarden Secrets Manager; never commit them. Source env files carry config only.

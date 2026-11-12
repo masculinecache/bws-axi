@@ -64,12 +64,12 @@ ${COMMANDS[c]}`;
 
 const COMMANDS = {
   'projects': `List Bitwarden SM projects (names + ids)
-flags: --help
+flags: --limit <n> (default 500), --help
 examples:
   bws-axi projects`,
   'items': `List secrets in a project (keys only, values never shown)
 args: <project> (name or id)
-flags: --limit <n> (default 100), --help
+flags: --limit <n> (default 500), --help
 examples:
   bws-axi items sandbox
   bws-axi items sandbox --limit 20`,
@@ -142,15 +142,20 @@ async function main() {
   if (cmd === 'projects') {
     const f = parseFlags(rest, { values: ['limit'] });
     if (f.help) { process.stdout.write(cmdHelp('projects') + '\n'); process.exit(0); }
-    const limit = Math.min(parseInt(f.limit || '100', 10) || 100, 1000);
+    const limit = Math.min(parseInt(f.limit || '500', 10) || 500, 1000);
     const projects = json('projects', ['project', 'list']);
     const rows = projects.slice(0, limit).map((p) => ({ id: p.id.slice(0, 12), name: p.name }));
     const out = [];
+    out.push(list('projects', ['name', 'id'], rows, { total: projects.length }));
     if (projects.length === 0) {
       out.push('projects: 0 projects found');
     } else {
-      out.push(list('projects', ['name', 'id'], rows, { total: projects.length }));
-      out.push(help([`Run \`bws-axi items <name>\` to list secrets in a project`]));
+      const hints = [];
+      if (rows.length < projects.length) {
+        hints.push(`Run \`bws-axi projects --limit ${projects.length}\` for all ${projects.length} projects`);
+      }
+      hints.push(`Run \`bws-axi items <name>\` to list secrets in a project`);
+      out.push(help(hints));
     }
     process.stdout.write(out.join('\n') + '\n');
     process.exit(0);
@@ -161,16 +166,21 @@ async function main() {
     if (f.help) { process.stdout.write(cmdHelp('items') + '\n'); process.exit(0); }
     if (f._.length !== 1) usageError('items requires exactly one argument: <project>', ['Run `bws-axi items --help`']);
     const project = resolveProject(f._[0]);
-    const limit = Math.min(parseInt(f.limit || '100', 10) || 100, 1000);
+    const limit = Math.min(parseInt(f.limit || '500', 10) || 500, 1000);
     const secrets = json('secrets', ['secret', 'list', project.id]);
     const rows = secrets.slice(0, limit).map((s) => ({ key: s.key, type: s.type || 'login' }));
     const out = [`project: ${project.name}`];
+    out.push(list('secrets', ['key', 'type'], rows, { total: secrets.length }));
     if (secrets.length === 0) {
       out.push(`secrets: 0 secrets found in project "${project.name}"`);
       out.push(help([`Run \`bws-axi projects\` to check other projects`]));
     } else {
-      out.push(list('secrets', ['key', 'type'], rows, { total: secrets.length }));
-      out.push(help([`Run \`bws-axi secret ${project.name} <key> --full\` to read one value`]));
+      const hints = [];
+      if (rows.length < secrets.length) {
+        hints.push(`Run \`bws-axi items ${project.name} --limit ${secrets.length}\` for all ${secrets.length} items`);
+      }
+      hints.push(`Run \`bws-axi secret ${project.name} <key> --full\` to read one value`);
+      out.push(help(hints));
     }
     process.stdout.write(out.join('\n') + '\n');
     process.exit(0);

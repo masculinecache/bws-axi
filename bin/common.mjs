@@ -14,7 +14,7 @@ export function collapseHome(p) {
 export function list(name, fields, rows, opts = {}) {
   const lines = [];
   const n = rows.length;
-  if (opts.total !== undefined && opts.total > n) {
+  if (opts.total !== undefined) {
     lines.push(`count: ${n} of ${opts.total} total`);
   }
   lines.push(`${name}[${n}]{${fields.join(',')}}:`);
